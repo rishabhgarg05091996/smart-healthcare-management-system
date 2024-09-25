@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: patient-management-service
+  template:
+    metadata:
+      labels:
+        app: patient-management-service
+    spec:
+      containers:
+        - name: patient-management-service
+          image: your-dockerhub-username/patient-management-service:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: patient-management-service
+spec:
+  selector:
+    app: patient-management-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
